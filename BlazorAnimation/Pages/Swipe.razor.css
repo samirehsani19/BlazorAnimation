@@ -1,0 +1,14 @@
+﻿.swiper-container {
+    width: 600px;
+    height: 400px;
+    position: absolute;
+    left: 40%;
+    top: 40%;
+    margin-left: -150px;
+    margin-top: -150px;
+}
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+}

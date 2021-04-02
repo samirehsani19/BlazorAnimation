@@ -1,0 +1,22 @@
+﻿@page "/animation"
+@using BlazorAnimate
+
+<h3>Animation</h3>
+<br />
+<button class="btn btn-primary" @onclick="AnimateIt">Animate</button>
+<br />
+<Animate Animation="Animations.ZoomIn" Duration="@TimeSpan.FromSeconds(1)" @ref="animate" IsManual="true">
+    <TetsComponent></TetsComponent>
+</Animate>
+
+
+@code {
+
+    // Package: BlazorAnimate
+    string ani = Animations.SlideLeft.ToString();
+    private Animate animate;
+    private void AnimateIt()
+    {
+        animate.Run();
+    }
+}

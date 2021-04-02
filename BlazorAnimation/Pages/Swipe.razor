@@ -1,0 +1,27 @@
+﻿@page "/swipe"
+@inject IJSRuntime js
+<h2>Swipe</h2>
+
+
+<!-- Swiper -->
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image:url(Images/img1.jpg)"></div>
+        <div class="swiper-slide" style="background-image:url(Images/img2.jpg)"></div>
+        <div class="swiper-slide" style="background-image:url(Images/img3.jpg)"></div>
+        <div class="swiper-slide" style="background-image:url(Images/img4.jpeg)"></div>
+    </div>
+
+    <!--Add Pagination-->
+    <div class="swiper-pagination"></div>
+</div>
+
+@code
+{
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("GetContainer", "swiper-container");
+        //await js.InvokeVoidAsync("GetPagination", "swiper-pagination"); access it by name
+    }
+}

@@ -1,0 +1,40 @@
+﻿@page "/dragdrop"
+
+<h3>DragDrop</h3>
+
+
+<div class="alert alert-info" dropzone="true" style="height:600px;"
+     ondragover="event.preventDefault();"
+     ondragstart="event.dataTransfer.setData('Text', event.target.id);"
+     @ondrop="(()=> { DropItems.Add(DragItems.First()); })">
+    @foreach (var item in DropItems)
+    {
+        <h2 style="width: 400px; height: 50px; background: orange;">@item</h2>
+    }
+</div>
+
+@foreach (var item in DragItems)
+{
+    <h4 style="width:400px; height:50px; background: orange;" draggable="true">@item</h4>
+}
+
+
+@code
+{
+
+    List<string> DragItems;
+    List<string> DropItems = new List<string>();
+    protected override void OnInitialized()
+    {
+        DragItems = new List<string>
+        {
+            "Item 1",
+            "Item 2",
+            "Item 3",
+            "Item 4",
+            "Item 5",
+        };
+
+    }
+
+}
