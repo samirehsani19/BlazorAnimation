@@ -1,0 +1,63 @@
+﻿@inject IJSRuntime js
+<h3>Communication</h3>
+<br />
+
+@*needs for C# calling js function*@
+<div class="container" style="width:100%; height:50px; display:flex; justify-content: space-around;">
+    <input type="number" @bind-value="num1" />
+    <input type="number" @bind-value="num2" />
+    <button class="btn btn-primary" type="button" @onclick="GetResponse">Get Result</button>
+    <h2>The product of your numbers is: @result</h2>
+</div>
+
+
+@*needs for js calling c# method *@
+<div class="container" style="width:100%; height:50px; display:inline-block; justify-content: space-around; margin-top:40px">
+    <button class="btn btn-primary" type="button" onclick="jsFunctions.GetSum()">Enter numbers</button>
+    <h2 id="result"></h2>                                  @*calling js*@
+</div>
+
+
+@*needs for js calling c# method *@
+<div class="container" style="width:100%; height:50px; display:inline-block; justify-content: space-around; margin-top:40px">
+    <button class="btn btn-primary" type="button" @onclick="SendDotNetInstanceToJS">Get your name from js</button>
+    <h2>Your name is: @name</h2>                               
+</div>
+
+
+
+@code {
+
+
+    int num1 = 0;
+    int num2 = 0;
+    int result = 0;
+    async Task GetResponse()  // this method calling js function
+    {
+        result = await js.InvokeAsync<int>("GetResult", num1, num2);
+    }
+
+
+
+    [JSInvokable]
+    public static int GetSum(int num1, int num2)  // js calling this static method
+    {
+        var result = num1 + num2;
+        return result;
+    }
+
+
+    private async Task SendDotNetInstanceToJS()  // sending DotNet instance to js for calling void method
+    {
+        var dotNetObjRef = DotNetObjectReference.Create(this);
+        await js.InvokeVoidAsync("jsFunctions.GetInstance", dotNetObjRef);
+    }
+
+    string name = " ";
+    [JSInvokable]
+    public void GetName(string name) // js is calling this void method
+    {
+        this.name = name;
+        StateHasChanged();
+    }
+}
